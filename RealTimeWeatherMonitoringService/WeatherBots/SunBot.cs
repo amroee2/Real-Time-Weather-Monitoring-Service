@@ -1,14 +1,20 @@
-﻿namespace RealTimeWeatherMonitoringService
+﻿namespace RealTimeWeatherMonitoringService.WeatherBots
 {
-    public class SnowBot : IWeatherBot
+    public class SunBot : IWeatherBot
     {
         bool Enabled { get; set; }
         double TemperatureThreshold { get; set; }
         string Message { get; set; }
 
+        public SunBot(bool enabled, double temperatureThreshold, string message)
+        {
+            Enabled = enabled;
+            TemperatureThreshold = temperatureThreshold;
+            Message = message;
+        }
         public void CheckThreshold(double Temperature)
         {
-            if(Temperature < TemperatureThreshold)
+            if (Temperature > TemperatureThreshold)
             {
                 TriggerMessage();
             }

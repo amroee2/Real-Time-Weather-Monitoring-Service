@@ -1,4 +1,4 @@
-﻿namespace RealTimeWeatherMonitoringService
+﻿namespace RealTimeWeatherMonitoringService.WeatherBots
 {
     public class RainBot : IWeatherBot
     {
@@ -6,6 +6,12 @@
         double HumidityThreshold { get; set; }
         string Message { get; set; }
 
+        public RainBot(bool enabled, double humidityThreshold, string message)
+        {
+            Enabled = enabled;
+            HumidityThreshold = humidityThreshold;
+            Message = message;
+        }
         public void CheckThreshold(double Humidity)
         {
             if (Humidity > HumidityThreshold)
