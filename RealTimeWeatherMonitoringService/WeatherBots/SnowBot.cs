@@ -16,6 +16,7 @@
         {
             if (Temperature < TemperatureThreshold)
             {
+                Console.WriteLine("SnowBot activated");
                 TriggerMessage();
             }
         }

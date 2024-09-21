@@ -16,6 +16,7 @@
         {
             if (Humidity > HumidityThreshold)
             {
+                Console.WriteLine("RainBot activated");
                 TriggerMessage();
             }
         }
