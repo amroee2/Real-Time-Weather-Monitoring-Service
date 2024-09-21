@@ -1,4 +1,4 @@
-﻿namespace RealTimeWeatherMonitoringService.DataParser
+﻿namespace RealTimeWeatherMonitoringService.DataParsing
 {
     public class DataParser
     {
@@ -9,12 +9,12 @@
             _parser = parser;
         }
 
-        public double? readTemperature(string data)
+        public double readTemperature(string data)
         {
             return _parser.readTemperature(data);
         }
 
-        public double? readHumidity(string data)
+        public double readHumidity(string data)
         {
             return _parser.readHumidity(data);
         }

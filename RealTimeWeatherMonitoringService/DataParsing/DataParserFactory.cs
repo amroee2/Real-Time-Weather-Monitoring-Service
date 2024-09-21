@@ -1,4 +1,4 @@
-﻿namespace RealTimeWeatherMonitoringService.DataParser
+﻿namespace RealTimeWeatherMonitoringService.DataParsing
 {
     public class DataParserFactory
     {
