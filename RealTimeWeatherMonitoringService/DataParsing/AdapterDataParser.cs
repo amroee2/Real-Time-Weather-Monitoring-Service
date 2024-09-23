@@ -1,10 +1,10 @@
 ﻿namespace RealTimeWeatherMonitoringService.DataParsing
 {
-    public class DataParser
+    public class AdapterDataParser
     {
         private readonly IDataParser _parser;
 
-        public DataParser(IDataParser parser)
+        public AdapterDataParser(IDataParser parser)
         {
             _parser = parser;
         }
