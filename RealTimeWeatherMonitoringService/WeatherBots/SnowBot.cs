@@ -1,32 +1,27 @@
-﻿namespace RealTimeWeatherMonitoringService.WeatherBots
-{
-    public class SnowBot : IWeatherBot
-    {
-        bool Enabled { get; set; }
-        double TemperatureThreshold { get; set; }
-        string Message { get; set; }
+﻿using RealTimeWeatherMonitoringService.Observer;
 
-        public SnowBot(bool enabled, double temperatureThreshold, string message)
+namespace RealTimeWeatherMonitoringService.WeatherBots
+{
+    public class SnowBot : WeatherBot<double>, IObserver
+    {
+        public SnowBot(bool enabled, string message, double temperatureThreshold)
+            : base(enabled, message, temperatureThreshold) { }
+
+        public override void CheckThreshold(double Temperature)
         {
-            Enabled = enabled;
-            TemperatureThreshold = temperatureThreshold;
-            Message = message;
-        }
-        public void CheckThreshold(double Temperature)
-        {
-            if (Temperature < TemperatureThreshold)
+            if (Temperature < Threshold && Enabled)
             {
                 Console.WriteLine("SnowBot activated");
-                TriggerMessage();
-            }
-        }
-
-        public void TriggerMessage()
-        {
-            if (Enabled)
-            {
                 Console.WriteLine(Message);
             }
+        }
+        public override string GetWeatherType() => "Temperature";
+
+        public void Update(IData data)
+        {
+            var context = new WeatherContext();
+            context.SetStrategy(this);
+            context.CheckThreshold(data.Temperature);
         }
     }
 }

@@ -2,19 +2,15 @@
 {
     public class WeatherContext
     {
-        public List<IWeatherBot> _weatherBots;
+        public WeatherBot<double> _weatherBot;
 
-        public WeatherContext(List<IWeatherBot> weatherBots)
+        public void SetStrategy(WeatherBot<double> strategy)
         {
-            _weatherBots = weatherBots;
+            _weatherBot = strategy;
         }
-
         public void CheckThreshold(double value)
         {
-            foreach(var weatherBot in _weatherBots)
-            {
-                weatherBot.CheckThreshold(value);
-            }
+            _weatherBot.CheckThreshold(value);
         }
     }
 }

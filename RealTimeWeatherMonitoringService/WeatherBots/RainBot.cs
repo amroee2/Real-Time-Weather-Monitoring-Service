@@ -1,32 +1,27 @@
-﻿namespace RealTimeWeatherMonitoringService.WeatherBots
-{
-    public class RainBot : IWeatherBot
-    {
-        private bool Enabled { get; set; }
-        double HumidityThreshold { get; set; }
-        string Message { get; set; }
+﻿using RealTimeWeatherMonitoringService.Observer;
 
-        public RainBot(bool enabled, double humidityThreshold, string message)
+namespace RealTimeWeatherMonitoringService.WeatherBots
+{
+    public class RainBot : WeatherBot<double>, IObserver
+    {
+        public RainBot(bool enabled, string message, double humidityThreshold)
+            : base(enabled, message, humidityThreshold) { }
+
+        public override void CheckThreshold(double Humidity)
         {
-            Enabled = enabled;
-            HumidityThreshold = humidityThreshold;
-            Message = message;
-        }
-        public void CheckThreshold(double Humidity)
-        {
-            if (Humidity > HumidityThreshold)
+            if (Humidity > Threshold && Enabled)
             {
                 Console.WriteLine("RainBot activated");
-                TriggerMessage();
-            }
-        }
-
-        public void TriggerMessage()
-        {
-            if (Enabled)
-            {
                 Console.WriteLine(Message);
             }
+        }
+        public override string GetWeatherType() => "Humidity";
+
+        public void Update(IData data)
+        {
+            var context = new WeatherContext();
+            context.SetStrategy(this);
+            context.CheckThreshold(data.Humidity);
         }
     }
 }

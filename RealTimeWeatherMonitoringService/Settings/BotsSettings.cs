@@ -1,42 +1,46 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RealTimeWeatherMonitoringService.WeatherBots;
 
 namespace RealTimeWeatherMonitoringService.Settings
 {
     public class BotsSettings
     {
-        List<IWeatherBot> _bots;
+        public List<WeatherBot<double>> Bots { get; private set; }
 
-        public BotsSettings(List<IWeatherBot> bots)
+        public BotsSettings()
         {
-            _bots = bots;
+            Bots = new List<WeatherBot<double>>();
         }
 
-        public void readSettings()
+        public async Task<List<WeatherBot<double>>> ReadSettings()
         {
-            try
-            {
-                string baseDirectory = AppContext.BaseDirectory;
-                string filePath = Path.Combine(baseDirectory, "Settings", "config.json");
-                string json = File.ReadAllText(filePath);
-                JObject jsonObject = JObject.Parse(json);
-                AddBots(jsonObject);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
+            string baseDirectory = AppContext.BaseDirectory;
+            string filePath = Path.Combine(baseDirectory, "Settings", "config.json");
+            string json = await File.ReadAllTextAsync(filePath);
+            dynamic? weatherData = JsonConvert.DeserializeObject(json);
 
-        private void AddBots(JObject jsonObject)
-        {
-            RainBot? rainBot = jsonObject["RainBot"]?.ToObject<RainBot>();
-            SunBot? sunBot = jsonObject["SunBot"]?.ToObject<SunBot>();
-            SnowBot? snowBot = jsonObject["SnowBot"]?.ToObject<SnowBot>();
-            _bots.Add(rainBot);
-            _bots.Add(sunBot);
-            _bots.Add(snowBot);
+            WeatherBot<double> rainBot = new RainBot(
+                (bool) weatherData.RainBot.enabled,
+                (string) weatherData.RainBot.message,
+                (double)weatherData.RainBot.humidityThreshold
+            );
+            Bots.Add(rainBot);
+
+            WeatherBot<double> sunBot = new SunBot(
+                (bool) weatherData.SunBot.enabled,
+                (string) weatherData.SunBot.message,
+                (double)weatherData.SunBot.temperatureThreshold
+            );
+            Bots.Add(sunBot);
+
+            WeatherBot<double> snowBot = new SnowBot(
+                (bool) weatherData.SnowBot.enabled,
+                (string) weatherData.SnowBot.message,
+                (double)weatherData.SnowBot.temperatureThreshold
+            );
+            Bots.Add(snowBot);
+
+            return Bots;
         }
     }
 }
