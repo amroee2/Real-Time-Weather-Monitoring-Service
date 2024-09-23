@@ -5,7 +5,7 @@
         public int GetUserType()
         {
             Console.WriteLine("Enter weather data");
-            Console.WriteLine("1- JSON\n2- XML");
+            Console.WriteLine("1- JSON\n2- XML\n3- Exit");
             int format = Convert.ToInt32(Console.ReadLine());
             return format;
         }
