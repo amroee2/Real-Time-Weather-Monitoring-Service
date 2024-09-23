@@ -16,29 +16,13 @@ namespace RealTimeWeatherMonitoringService.Settings
         {
             string baseDirectory = AppContext.BaseDirectory;
             string filePath = Path.Combine(baseDirectory, "Settings", "config.json");
-            string json = await File.ReadAllTextAsync(filePath);
-            dynamic? weatherData = JsonConvert.DeserializeObject(json);
+            string json =await File.ReadAllTextAsync(filePath);
+            var botsData = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
 
-            WeatherBot<double> rainBot = new RainBot(
-                (bool) weatherData.RainBot.enabled,
-                (string) weatherData.RainBot.message,
-                (double)weatherData.RainBot.humidityThreshold
-            );
-            Bots.Add(rainBot);
-
-            WeatherBot<double> sunBot = new SunBot(
-                (bool) weatherData.SunBot.enabled,
-                (string) weatherData.SunBot.message,
-                (double)weatherData.SunBot.temperatureThreshold
-            );
-            Bots.Add(sunBot);
-
-            WeatherBot<double> snowBot = new SnowBot(
-                (bool) weatherData.SnowBot.enabled,
-                (string) weatherData.SnowBot.message,
-                (double)weatherData.SnowBot.temperatureThreshold
-            );
-            Bots.Add(snowBot);
+            foreach (var bot in botsData)
+            {
+                Bots.Add(WeatherBotFactory.CreateBot(bot.Key, bot.Value));
+            }
 
             return Bots;
         }
