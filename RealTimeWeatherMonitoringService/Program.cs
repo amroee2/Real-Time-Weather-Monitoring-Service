@@ -2,8 +2,6 @@
 using RealTimeWeatherMonitoringService.Observer;
 using RealTimeWeatherMonitoringService.Settings;
 using RealTimeWeatherMonitoringService.WeatherBots;
-using System;
-using System.Collections.Generic;
 
 namespace RealTimeWeatherMonitoringService
 {
@@ -44,7 +42,18 @@ namespace RealTimeWeatherMonitoringService
 
         private static bool TryGetInputFormat(UserInterface userInterface, out Formats format)
         {
-            int inputFormat = userInterface.GetUserType();
+            int inputFormat;
+            try
+            {
+                inputFormat = userInterface.GetUserType();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid input format");
+                Console.WriteLine(ex.Message);
+                format = Formats.Exit;
+                return false;
+            }
             if (!Enum.TryParse(inputFormat.ToString(), out format))
             {
                 Console.WriteLine("Invalid format");
@@ -58,9 +67,19 @@ namespace RealTimeWeatherMonitoringService
         {
             AdapterDataParser dataParser = utility.InitializeParser((int)format);
             string data = userInterface.GetUserInput();
+            double humidity, temperature;
+            try
+            {
+                humidity = dataParser.readHumidity(data);
+                temperature = dataParser.readTemperature(data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid input format");
+                Console.WriteLine(ex.Message);
+                return;
+            }
 
-            double humidity = dataParser.readHumidity(data);
-            double temperature = dataParser.readTemperature(data);
 
             weatherStation.SetWeatherData(temperature, humidity);
         }

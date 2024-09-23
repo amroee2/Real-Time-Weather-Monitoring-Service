@@ -3,8 +3,7 @@
     public class WeatherStation : ISubject
     {
         private List<IObserver> _observers;
-        private double _temperature;
-        private double _humidity;
+
         private IData _weatherData;
         public WeatherStation(IData weatherData)
         {
@@ -32,8 +31,8 @@
 
         public void SetWeatherData(double temperature, double humidity)
         {
-            _temperature = temperature;
-            _humidity = humidity;
+            _weatherData.Temperature = temperature;
+            _weatherData.Humidity = humidity;
             NotifyObservers();
         }
     }
