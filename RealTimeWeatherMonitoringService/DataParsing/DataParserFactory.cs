@@ -1,6 +1,6 @@
 ﻿namespace RealTimeWeatherMonitoringService.DataParsing
 {
-    public class DataParserFactory
+    public class DataParserFactory : IDataParserFactory
     {
         public IDataParser GetParser(Formats format)
         {
