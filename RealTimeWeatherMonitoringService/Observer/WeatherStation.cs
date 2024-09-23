@@ -5,8 +5,8 @@
         private List<IObserver> _observers;
         private double _temperature;
         private double _humidity;
-        private WeatherData _weatherData;
-        public WeatherStation(WeatherData weatherData)
+        private IData _weatherData;
+        public WeatherStation(IData weatherData)
         {
             _observers = new List<IObserver>();
             _weatherData = weatherData;
