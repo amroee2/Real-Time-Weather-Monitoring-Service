@@ -3,6 +3,7 @@
     public enum Formats
     {
         Json =1,
-        Xml
+        Xml,
+        Exit
     }
 }
