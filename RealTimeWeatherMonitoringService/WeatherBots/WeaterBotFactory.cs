@@ -1,25 +1,26 @@
-﻿using RealTimeWeatherMonitoringService.WeatherBots;
-
-public class WeatherBotFactory
+﻿namespace RealTimeWeatherMonitoringService.WeatherBots
 {
-    private static readonly Dictionary<string, Func<dynamic, WeatherBot<double>>> _botRegistry =
-        new Dictionary<string, Func<dynamic, WeatherBot<double>>>()
+    public class WeatherBotFactory : IBotFactory
+    {
+        public static readonly Dictionary<string, Func<BotData, WeatherBot<double>>> _botRegistry =
+            new Dictionary<string, Func<BotData, WeatherBot<double>>>()
+            {
+                { "RainBot", botData => new RainBot(botData.enabled, botData.message, botData.humidityThreshold) },
+                { "SunBot", botData => new SunBot(botData.enabled, botData.message, botData.temperatureThreshold) },
+                { "SnowBot", botData => new SnowBot(botData.enabled, botData.message, botData.temperatureThreshold) }
+            };
+
+        public void RegisterBot(string botType, Func<BotData, WeatherBot<double>> creator)
         {
-            { "RainBot", botData => new RainBot((bool)botData.enabled, (string)botData.message, (double)botData.humidityThreshold)  },
-            { "SunBot", botData => new SunBot((bool)botData.enabled, (string)botData.message, (double)botData.temperatureThreshold) },
-            { "SnowBot", botData => new SnowBot((bool)botData.enabled, (string)botData.message, (double)botData.temperatureThreshold) }
-        };
+            _botRegistry[botType] = creator;
+        }
 
-    public static void RegisterBot(string botType, Func<dynamic, WeatherBot<double>> creator)
-    {
-        _botRegistry[botType] = creator;
-    }
+        public WeatherBot<double> CreateBot(string botType, BotData botData)
+        {
+            if (_botRegistry.TryGetValue(botType, out var creator))
+                return creator(botData);
 
-    public static WeatherBot<double> CreateBot(string botType, dynamic botData)
-    {
-        if (_botRegistry.TryGetValue(botType, out var creator))
-            return creator(botData);
-
-        throw new NotSupportedException($"Bot type {botType} is not supported.");
+            throw new NotSupportedException($"Bot type {botType} is not supported.");
+        }
     }
 }

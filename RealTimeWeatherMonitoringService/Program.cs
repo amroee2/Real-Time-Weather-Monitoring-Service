@@ -9,7 +9,7 @@ namespace RealTimeWeatherMonitoringService
     {
         static void Main(string[] args)
         {
-            BotsSettings botsSettings = new BotsSettings();
+            BotsSettings botsSettings = new BotsSettings(new WeatherBotFactory());
             UserParser utility = new UserParser(new DataParserFactory());
             UserInterface userInterface = new UserInterface();
             WeatherData weatherData = new WeatherData();
