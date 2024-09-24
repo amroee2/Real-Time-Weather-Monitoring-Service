@@ -1,6 +1,6 @@
 ﻿namespace RealTimeWeatherMonitoringService.WeatherBots
 {
-    public class WeatherContext
+    public class WeatherContext : IContext
     {
         public WeatherBot<double> _weatherBot;
 

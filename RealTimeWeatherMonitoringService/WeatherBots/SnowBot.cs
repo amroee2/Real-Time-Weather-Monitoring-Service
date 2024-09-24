@@ -15,11 +15,9 @@ namespace RealTimeWeatherMonitoringService.WeatherBots
                 Console.WriteLine(Message);
             }
         }
-        public override string GetWeatherType() => "Temperature";
 
-        public void Update(IData data)
+        public override void Update(IData data)
         {
-            var context = new WeatherContext();
             context.SetStrategy(this);
             context.CheckThreshold(data.Temperature);
         }

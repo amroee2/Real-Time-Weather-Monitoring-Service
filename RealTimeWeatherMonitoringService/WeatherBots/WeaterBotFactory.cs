@@ -5,7 +5,7 @@ public class WeatherBotFactory
     private static readonly Dictionary<string, Func<dynamic, WeatherBot<double>>> _botRegistry =
         new Dictionary<string, Func<dynamic, WeatherBot<double>>>()
         {
-            { "RainBot", botData => new RainBot((bool)botData.enabled, (string)botData.message, (double)botData.humidityThreshold) },
+            { "RainBot", botData => new RainBot((bool)botData.enabled, (string)botData.message, (double)botData.humidityThreshold)  },
             { "SunBot", botData => new SunBot((bool)botData.enabled, (string)botData.message, (double)botData.temperatureThreshold) },
             { "SnowBot", botData => new SnowBot((bool)botData.enabled, (string)botData.message, (double)botData.temperatureThreshold) }
         };
