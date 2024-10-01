@@ -9,23 +9,31 @@ namespace RealTimeWeatherMonitoringService.Tests
         [Fact]
         public void ShouldSetStrategyCorrectly()
         {
+            //Arrange
             var weatherBotMock = new Mock<WeatherBot<double>>();
             WeatherContext weatherContext = new WeatherContext();
 
+            //Act
             weatherContext.SetStrategy(weatherBotMock.Object);
 
+            //Assert
             Assert.Equal(weatherBotMock.Object, weatherContext._weatherBot);
         }
         [Fact]
         public void ShouldSetWeatherContextCorrectly() {
+
+            //Arrange
             var weatherBotMock = new Mock<WeatherBot<double>>();
             WeatherContext weatherContext = new WeatherContext();
             weatherContext._weatherBot = weatherBotMock.Object;
 
             Fixture fixture = new Fixture();
             double value = fixture.Create<double>();
+
+            //Act
             weatherContext.CheckThreshold(value);
 
+            //Assert
             weatherBotMock.Verify(w => w.CheckThreshold(It.IsAny<double>()), Times.Once);
         }
     }
