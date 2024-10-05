@@ -5,13 +5,13 @@ namespace RealTimeWeatherMonitoringService.DataParsing
     public class JsonParser : IDataParser
     {
 
-        public double readTemperature(string json)
+        public double ReadTemperature(string json)
         {
             JObject jsonObject = JObject.Parse(json);
             return jsonObject["Temperature"].Value<double>();
         }
 
-        public double readHumidity(string json)
+        public double ReadHumidity(string json)
         {
             JObject jsonObject = JObject.Parse(json);
             return jsonObject["Humidity"].Value<double>();

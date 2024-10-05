@@ -8,7 +8,7 @@ namespace RealTimeWeatherMonitoringService.Tests
     {
 
         [Fact]
-        public void ShouldSetStrategyCorrectly()
+        public void SetStrategy_ShouldSetStrategyCorrectly()
         {
             //Arrange
             var weatherBotMock = new Mock<WeatherBot<double>>();
@@ -22,7 +22,7 @@ namespace RealTimeWeatherMonitoringService.Tests
         }
 
         [Fact]
-        public void ShouldSetWeatherContextCorrectly() {
+        public void CheckThreshold_ShouldSetWeatherContextCorrectly() {
 
             //Arrange
             var weatherBotMock = new Mock<WeatherBot<double>>();

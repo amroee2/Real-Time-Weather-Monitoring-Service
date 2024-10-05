@@ -7,7 +7,7 @@ namespace RealTimeWeatherMonitoringService.Tests
     {
 
         [Fact]
-        public void ShouldRegisterObserver()
+        public void RegisterObserver_ShouldRegisterObserver()
         {
             //Arrange
             Mock<IObserver> mockObserver = new Mock<IObserver>();
@@ -21,14 +21,14 @@ namespace RealTimeWeatherMonitoringService.Tests
         }
 
         [Fact]
-        public void ShouldRemoveObserver()
+        public void RemoveObserver_ShouldRemoveObserver()
         {
             //Arrange
             Mock<IObserver> mockObserver = new Mock<IObserver>();
             WeatherStation weatherStation = new WeatherStation(new WeatherData());
+            weatherStation.RegisterObserver(mockObserver.Object);
 
             //Act
-            weatherStation.RegisterObserver(mockObserver.Object);
             weatherStation.RemoveObserver(mockObserver.Object);
 
             //Assert
@@ -36,7 +36,7 @@ namespace RealTimeWeatherMonitoringService.Tests
         }
 
         [Fact]
-        public void ShouldNotifyObserversWithCorrectData()
+        public void SetWeatherData_ShouldNotifyObserversWithCorrectData()
         {
             //Arrange
             Mock<IObserver> mockObserver = new Mock<IObserver>();
@@ -52,16 +52,15 @@ namespace RealTimeWeatherMonitoringService.Tests
         }
 
         [Fact]
-        public void ShouldNotifyAllRegisteredObservers()
+        public void SetWeatherData_ShouldNotifyAllRegisteredObservers()
         {
             //Arrange
             Mock<IObserver> mockObserver1 = new Mock<IObserver>();
             Mock<IObserver> mockObserver2 = new Mock<IObserver>();
             WeatherStation weatherStation = new WeatherStation(new WeatherData());
-
-            //Act
             weatherStation.RegisterObserver(mockObserver1.Object);
             weatherStation.RegisterObserver(mockObserver2.Object);
+            //Act
             weatherStation.SetWeatherData(25.0, 50.0);
 
             //Assert

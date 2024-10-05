@@ -2,7 +2,7 @@
 {
     public interface IDataParser
     {
-        double readTemperature(string data);
-        double readHumidity(string data);
+        double ReadTemperature(string data);
+        double ReadHumidity(string data);
     }
 }

@@ -6,37 +6,37 @@ namespace RealTimeWeatherMonitoringService.Tests
     public class DataParsingTests
     {
         [Fact]
-        public void ShouldReadTempreature()
+        public void ReadTemperature_ShouldReadTempreature()
         {
             //Arrange
             Mock<IDataParser> mockDataParser = new Mock<IDataParser>();
             AdapterDataParser dataParser = new AdapterDataParser(mockDataParser.Object);
 
             //Act
-            dataParser.readTemperature("Temperature: 25.0");
+            dataParser.ReadTemperature("Temperature: 25.0");
 
             //Assert
-            mockDataParser.Verify(x => x.readTemperature(It.IsAny<string>()), Times.Once);
+            mockDataParser.Verify(x => x.ReadTemperature(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
-        public void ShouldReadHumidity()
+        public void ReadHumidity_ShouldReadHumidity()
         {
             //Arrange
             Mock<IDataParser> mockDataParser = new Mock<IDataParser>();
             AdapterDataParser dataParser = new AdapterDataParser(mockDataParser.Object);
 
             //Act
-            dataParser.readHumidity("Humidity: 50.0");
+            dataParser.ReadHumidity("Humidity: 50.0");
 
             //Assert
-            mockDataParser.Verify(x => x.readHumidity(It.IsAny<string>()), Times.Once);
+            mockDataParser.Verify(x => x.ReadHumidity(It.IsAny<string>()), Times.Once);
         }
 
         [Theory]
         [InlineData("<WeatherData><Location>City Name</Location><Temperature>32</Temperature><Humidity>40</Humidity></WeatherData>", 32, "xml")]
         [InlineData("{\"Location\": \"City Name\", \"Temperature\": 32, \"Humidity\": 40}", 32.0, "json")]
-        public void ShouldReadTemperatureFromMultipleFormats(string data, double expectedTemperature, string parserType)
+        public void ReadTemperature_ShouldReadTemperatureFromMultipleFormats(string data, double expectedTemperature, string parserType)
         {
             //Arrange
             IDataParser parser = parserType == "xml"
@@ -44,7 +44,7 @@ namespace RealTimeWeatherMonitoringService.Tests
                 : (IDataParser)new JsonParser();
 
             //Act
-            double temperature = parser.readTemperature(data);
+            double temperature = parser.ReadTemperature(data);
 
             //Assert
             Assert.Equal(expectedTemperature, temperature);
@@ -53,7 +53,7 @@ namespace RealTimeWeatherMonitoringService.Tests
         [Theory]
         [InlineData("<WeatherData><Location>City Name</Location><Temperature>32</Temperature><Humidity>40</Humidity></WeatherData>", 40, "xml")]
         [InlineData("{\"Location\": \"City Name\", \"Temperature\": 32, \"Humidity\": 40}", 40.0, "json")]
-        public void ShouldReadHumidityFromMultipleFormats(string data, double expectedHumidity, string parserType)
+        public void ReadHumidity_ShouldReadHumidityFromMultipleFormats(string data, double expectedHumidity, string parserType)
         {
             //Arrange
             IDataParser parser = parserType == "xml"
@@ -61,7 +61,7 @@ namespace RealTimeWeatherMonitoringService.Tests
                 : (IDataParser)new JsonParser();
 
             //Act
-            double humidity = parser.readHumidity(data);
+            double humidity = parser.ReadHumidity(data);
 
             //Assert
             Assert.Equal(expectedHumidity, humidity);
@@ -70,7 +70,7 @@ namespace RealTimeWeatherMonitoringService.Tests
         [Theory]
         [InlineData("xml", typeof(XmlParser))]
         [InlineData("json", typeof(JsonParser))]
-        public void ShouldReturnCorrectParser(string format, Type expectedParserType)
+        public void GetParser_ShouldReturnCorrectParser(string format, Type expectedParserType)
         {
             //Arrange
             DataParserFactory factory = new DataParserFactory();

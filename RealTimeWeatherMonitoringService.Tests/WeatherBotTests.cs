@@ -12,7 +12,7 @@ namespace RealTimeWeatherMonitoringService.Tests
         [InlineData("RainBot", 80.0)]
         [InlineData("SunBot", 50.0)]
         [InlineData("SnowBot", -1.0)]
-        public void ShouldUpdate(string BotType, double value)
+        public void Update_ShouldUpdate(string BotType, double value)
         {
             //Arrange
             WeatherBot<double> weatherBot;
@@ -47,7 +47,7 @@ namespace RealTimeWeatherMonitoringService.Tests
 
         [Theory]
         [MemberData(nameof(GetBotTestData))]
-        public void ShouldCreateBot(string botType, BotData botData)
+        public void CreateBot_ShouldCreateBot(string botType, BotData botData)
         {
             //Arrange
             var factory = new WeatherBotFactory();
@@ -74,7 +74,7 @@ namespace RealTimeWeatherMonitoringService.Tests
         }
 
         [Fact]
-        public void ShouldRegisterBot()
+        public void RegisterBot_ShouldRegisterBot()
         {
             //Arrange
             var factory = new WeatherBotFactory();
@@ -89,7 +89,7 @@ namespace RealTimeWeatherMonitoringService.Tests
         }
 
         [Fact]
-        public async void ShouldCreateAllBots()
+        public async void ReadSettings_ShouldCreateAllBots()
         {
             //Arrange
             Mock<IBotFactory> mockFactory = new Mock<IBotFactory>();

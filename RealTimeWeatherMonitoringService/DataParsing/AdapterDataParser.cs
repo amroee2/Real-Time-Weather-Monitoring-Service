@@ -9,14 +9,14 @@
             _parser = parser;
         }
 
-        public double readTemperature(string data)
+        public double ReadTemperature(string data)
         {
-            return _parser.readTemperature(data);
+            return _parser.ReadTemperature(data);
         }
 
-        public double readHumidity(string data)
+        public double ReadHumidity(string data)
         {
-            return _parser.readHumidity(data);
+            return _parser.ReadHumidity(data);
         }
     }
 }

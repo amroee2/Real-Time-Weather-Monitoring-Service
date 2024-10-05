@@ -70,8 +70,8 @@ namespace RealTimeWeatherMonitoringService
             double humidity, temperature;
             try
             {
-                humidity = dataParser.readHumidity(data);
-                temperature = dataParser.readTemperature(data);
+                humidity = dataParser.ReadHumidity(data);
+                temperature = dataParser.ReadTemperature(data);
             }
             catch (Exception ex)
             {
