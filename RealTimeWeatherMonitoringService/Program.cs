@@ -30,7 +30,7 @@ namespace RealTimeWeatherMonitoringService
         private static WeatherStation InitializeWeatherStation(WeatherData weatherData, BotsSettings botsSettings)
         {
             WeatherStation weatherStation = new WeatherStation(weatherData);
-            List<WeatherBot<double>> weatherBots = botsSettings.ReadSettings().GetAwaiter().GetResult();
+            List<WeatherBot<double>> weatherBots = botsSettings.ReadSettings("Settings", "config.json").GetAwaiter().GetResult();
 
             foreach (var bot in weatherBots)
             {

@@ -98,7 +98,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             BotsSettings botsSettings = new BotsSettings(mockFactory.Object);
 
             //Act
-            List<WeatherBot<double>> weatherBots  = await botsSettings.ReadSettings();
+            List<WeatherBot<double>> weatherBots  = await botsSettings.ReadSettings("IOTests", "config.json");
 
             //Assert
             Assert.Equal(3, weatherBots.Count);

@@ -14,10 +14,10 @@ namespace RealTimeWeatherMonitoringService.Settings
             WeatherBotFactory = weatherBotFactory;
         }
 
-        public async Task<List<WeatherBot<double>>> ReadSettings()
+        public async Task<List<WeatherBot<double>>> ReadSettings(string directory, string file)
         {
             string baseDirectory = AppContext.BaseDirectory;
-            string filePath = Path.Combine(baseDirectory, "Settings", "config.json");
+            string filePath = Path.Combine(baseDirectory, directory, file);
             string json = await File.ReadAllTextAsync(filePath);
 
             var botsData = JsonConvert.DeserializeObject<Dictionary<string, BotData>>(json);
