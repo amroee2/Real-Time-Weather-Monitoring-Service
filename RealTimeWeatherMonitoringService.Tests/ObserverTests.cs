@@ -5,6 +5,7 @@ namespace RealTimeWeatherMonitoringService.Tests
 {
     public class ObserverTests
     {
+
         [Fact]
         public void ShouldRegisterObserver()
         {
@@ -18,6 +19,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             mockObserver.Verify(x => x.Update(It.IsAny<IData>()), Times.Never);
         }
+
         [Fact]
         public void ShouldRemoveObserver()
         {
@@ -32,6 +34,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             mockObserver.Verify(x => x.Update(It.IsAny<IData>()), Times.Never);
         }
+
         [Fact]
         public void ShouldNotifyObserversWithCorrectData()
         {
@@ -47,6 +50,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             mockObserver.Verify(x => x.Update(It.Is<IData>(data =>
                 data.Temperature == 25.0 && data.Humidity == 50.0)), Times.Once);
         }
+
         [Fact]
         public void ShouldNotifyAllRegisteredObservers()
         {

@@ -6,6 +6,7 @@ namespace RealTimeWeatherMonitoringService.Tests
 {
     public class WeatherBotStrategyTests
     {
+
         [Fact]
         public void ShouldSetStrategyCorrectly()
         {
@@ -19,6 +20,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             Assert.Equal(weatherBotMock.Object, weatherContext._weatherBot);
         }
+
         [Fact]
         public void ShouldSetWeatherContextCorrectly() {
 

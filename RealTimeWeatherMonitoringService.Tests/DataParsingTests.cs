@@ -18,6 +18,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             mockDataParser.Verify(x => x.readTemperature(It.IsAny<string>()), Times.Once);
         }
+
         [Fact]
         public void ShouldReadHumidity()
         {
@@ -31,6 +32,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             mockDataParser.Verify(x => x.readHumidity(It.IsAny<string>()), Times.Once);
         }
+
         [Theory]
         [InlineData("<WeatherData><Location>City Name</Location><Temperature>32</Temperature><Humidity>40</Humidity></WeatherData>", 32, "xml")]
         [InlineData("{\"Location\": \"City Name\", \"Temperature\": 32, \"Humidity\": 40}", 32.0, "json")]
@@ -47,6 +49,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             Assert.Equal(expectedTemperature, temperature);
         }
+
         [Theory]
         [InlineData("<WeatherData><Location>City Name</Location><Temperature>32</Temperature><Humidity>40</Humidity></WeatherData>", 40, "xml")]
         [InlineData("{\"Location\": \"City Name\", \"Temperature\": 32, \"Humidity\": 40}", 40.0, "json")]
@@ -63,6 +66,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             Assert.Equal(expectedHumidity, humidity);
         }
+
         [Theory]
         [InlineData("xml", typeof(XmlParser))]
         [InlineData("json", typeof(JsonParser))]

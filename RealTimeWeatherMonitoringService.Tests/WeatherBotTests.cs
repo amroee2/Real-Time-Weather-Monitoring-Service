@@ -7,6 +7,7 @@ namespace RealTimeWeatherMonitoringService.Tests
 {
     public class WeatherBotTests
     {
+
         [Theory]
         [InlineData("RainBot", 80.0)]
         [InlineData("SunBot", 50.0)]
@@ -43,6 +44,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             mockContext.Verify(x => x.SetStrategy(weatherBot), Times.Once);
             mockContext.Verify(x => x.CheckThreshold(value), Times.Once);
         }
+
         [Theory]
         [MemberData(nameof(GetBotTestData))]
         public void ShouldCreateBot(string botType, BotData botData)
@@ -85,6 +87,7 @@ namespace RealTimeWeatherMonitoringService.Tests
             //Assert
             Assert.Equal(3, WeatherBotFactory._botRegistry.Count);
         }
+
         [Fact]
         public async void ShouldCreateAllBots()
         {
